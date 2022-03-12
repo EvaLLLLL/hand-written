@@ -1,0 +1,11 @@
+{
+  "name": "hand-written",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:EvaLLLLL/hand-written.git",
+  "license": "MIT",
+  "scripts": {
+    "t:bind": "cd bind && node test.js",
+    "t:deep": "cd deepClone && yarn test"
+  }
+}
