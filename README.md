@@ -1,4 +1,7 @@
 ## 手写系列
 
-- js polyfill
+- bind
+- deepClone
+- eventhub
+- promise
 - react hooks
