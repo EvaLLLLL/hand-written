@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "t:bind": "cd bind && node test.js",
-    "t:deep": "cd deepClone && yarn test"
+    "t:deep": "cd deepClone && yarn test",
+    "t:promise": "cd promise && yarn test"
   }
 }
