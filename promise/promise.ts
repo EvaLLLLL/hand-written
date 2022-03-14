@@ -1,18 +1,25 @@
 class Promise2 {
   succeed = null;
   fail = null;
+  state = "pending";
 
-  resolve = () => {
+  resolve = (result?: any) => {
+    this.state = "fullfilled";
     setTimeout(() => {
-      // @ts-ignore
-      this.succeed();
+      if (typeof this.succeed === "function") {
+        // @ts-ignore
+        this.succeed(result);
+      }
     }, 0);
   };
 
-  reject = () => {
+  reject = (reason?: any) => {
     setTimeout(() => {
-      // @ts-ignore
-      this.fail();
+      this.state = "rejected";
+      if (typeof this.fail === "function") {
+        // @ts-ignore
+        this.fail(reason);
+      }
     }, 0);
   };
 
@@ -24,9 +31,14 @@ class Promise2 {
     fn(this.resolve, this.reject);
   }
 
-  then(succeed: any, fail: any) {
-    this.succeed = succeed;
-    this.fail = fail;
+  then(succeed?: any, fail?: any) {
+    if (typeof succeed === "function") {
+      this.succeed = succeed;
+    }
+
+    if (typeof fail === "function") {
+      this.fail = fail;
+    }
   }
 }
 

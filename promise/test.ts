@@ -70,4 +70,27 @@ describe("Promise", () => {
     // @ts-ignore
     promise.then(() => {}, fail);
   });
+
+  it("2.2.1", () => {
+    const promise = new Promise((resolve: any) => {
+      resolve();
+    });
+    promise.then(false, null);
+  });
+
+  it("2.2.2", (done) => {
+    const succeed = sinon.fake();
+    const promise = new Promise((resolve: any) => {
+      assert.isFalse(succeed.called);
+      resolve(233);
+      setTimeout(() => {
+        assert(promise.state === "fullfilled");
+        assert.isTrue(succeed.called);
+        assert(succeed.calledWith(233));
+        done();
+      }, 0);
+    });
+
+    promise.then(succeed);
+  });
 });
