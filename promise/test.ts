@@ -33,36 +33,41 @@ describe("Promise", () => {
     assert(fn.called);
   });
 
-  it("new Promise(fn) 中的 fn 执行的时候必须接受一个 resolve 和 reject 两个函数", () => {
-    let called = false;
-    const promise = new Promise((resolve: any, reject: any) => {
-      called = true;
+  it("new Promise(fn) 中的 fn 执行的时候必须接受一个 resolve 和 reject 两个函数", (done) => {
+    new Promise((resolve: any, reject: any) => {
       assert.isFunction(resolve);
       assert.isFunction(reject);
+      done();
     });
-
-    // @ts-ignore
-    assert(called === true);
   });
 
   it("promise.then(success) 中的 success 会在 resolve 被调用的时候执行", (done) => {
-    let called = false;
+    const success = sinon.fake();
     const promise = new Promise((resolve: any, reject: any) => {
-      // 该函数没有执行
-      assert(called === false);
+      assert.isFalse(success.called);
       resolve();
-      // 该函数执行了
-
       setTimeout(() => {
-        // @ts-ignore
-        assert(called === true);
+        assert.isTrue(success.called);
         done();
       });
     });
 
     // @ts-ignore
-    promise.then(() => {
-      called = true;
+    promise.then(success);
+  });
+
+  it("promise.then(success, fail) 中的 fail 会在 reject 被调用的时候执行", (done) => {
+    const fail = sinon.fake();
+    const promise = new Promise((resolve: any, reject: any) => {
+      assert.isFalse(fail.called);
+      reject();
+      setTimeout(() => {
+        assert.isTrue(fail.called);
+        done();
+      });
     });
+
+    // @ts-ignore
+    promise.then(() => {}, fail);
   });
 });

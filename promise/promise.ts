@@ -12,7 +12,7 @@ class Promise2 {
   reject = () => {
     setTimeout(() => {
       // @ts-ignore
-      this.succeed();
+      this.fail();
     }, 0);
   };
 
