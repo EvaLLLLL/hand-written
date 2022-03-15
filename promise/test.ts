@@ -95,7 +95,7 @@ describe("Promise", () => {
     promise.then(succeed);
   });
 
-  it("2.2.2", (done) => {
+  it("2.2.3", (done) => {
     const failed = sinon.fake();
     const promise = new Promise((resolve: any, reject: any) => {
       assert.isFalse(failed.called);
@@ -110,5 +110,64 @@ describe("Promise", () => {
     });
 
     promise.then(() => {}, failed);
+  });
+
+  it("2.2.4 在我的代码执行完之前，不得调用 then 后面的俩函数", (done) => {
+    const succeed = sinon.fake();
+    const promise = new Promise((resolve: any) => {
+      resolve();
+    });
+
+    promise.then(succeed);
+    assert.isFalse(succeed.called);
+    setTimeout(() => {
+      assert.isTrue(succeed.called);
+      done();
+    }, 0);
+  });
+
+  it("2.2.4 失败回调", (done) => {
+    const failed = sinon.fake();
+    const promise = new Promise((resolve: any, reject: any) => {
+      reject();
+    });
+
+    promise.then(null, failed);
+    assert.isFalse(failed.called);
+    setTimeout(() => {
+      assert.isTrue(failed.called);
+      done();
+    }, 0);
+  });
+
+  it("2.2.5 ", (done) => {
+    const promise = new Promise((resolve: any) => {
+      resolve();
+    });
+
+    promise.then(function () {
+      "use strict";
+      // @ts-ignore
+      assert(this === undefined);
+      done();
+    });
+  });
+
+  it("2.2.6 then 可以在同一个 promise 里被多次调用", (done) => {
+    const promise = new Promise((resolve: any) => {
+      resolve();
+    });
+
+    const callbacks = [sinon.fake(), sinon.fake(), sinon.fake()];
+    promise.then(callbacks[0]);
+    promise.then(callbacks[1]);
+    promise.then(callbacks[2]);
+
+    setTimeout(() => {
+      assert(callbacks[0].called);
+      assert(callbacks[1].calledAfter(callbacks[0]));
+      assert(callbacks[2].calledAfter(callbacks[1]));
+      done();
+    }, 0);
   });
 });
