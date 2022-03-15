@@ -1,11 +1,20 @@
-class Promise2 {
+export enum Status {
+  Pending = "pending",
+  Fullfilled = "fullfilled",
+  Rejected = "rejected",
+}
+
+export class Promise2 {
   succeed = null;
   fail = null;
-  state = "pending";
+  state: Status = Status.Pending;
 
   resolve = (result?: any) => {
-    this.state = "fullfilled";
     setTimeout(() => {
+      if (this.state !== Status.Pending) return;
+
+      this.state = Status.Fullfilled;
+
       if (typeof this.succeed === "function") {
         // @ts-ignore
         this.succeed(result);
@@ -15,7 +24,9 @@ class Promise2 {
 
   reject = (reason?: any) => {
     setTimeout(() => {
-      this.state = "rejected";
+      if (this.state !== Status.Pending) return;
+
+      this.state = Status.Rejected;
       if (typeof this.fail === "function") {
         // @ts-ignore
         this.fail(reason);
@@ -41,5 +52,3 @@ class Promise2 {
     }
   }
 }
-
-export default Promise2;

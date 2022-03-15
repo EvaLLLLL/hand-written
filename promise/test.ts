@@ -1,6 +1,6 @@
 import "mocha";
 import chai from "chai";
-import Promise from "./promise";
+import { Promise2 as Promise, Status } from "./promise";
 import sinon from "sinon";
 import sinonChai from "sinon-chai";
 chai.use(sinonChai);
@@ -83,14 +83,32 @@ describe("Promise", () => {
     const promise = new Promise((resolve: any) => {
       assert.isFalse(succeed.called);
       resolve(233);
+      resolve(23333);
       setTimeout(() => {
-        assert(promise.state === "fullfilled");
-        assert.isTrue(succeed.called);
+        assert(promise.state === Status.Fullfilled);
+        assert.isTrue(succeed.calledOnce);
         assert(succeed.calledWith(233));
         done();
       }, 0);
     });
 
     promise.then(succeed);
+  });
+
+  it("2.2.2", (done) => {
+    const failed = sinon.fake();
+    const promise = new Promise((resolve: any, reject: any) => {
+      assert.isFalse(failed.called);
+      reject(233);
+      reject(23333);
+      setTimeout(() => {
+        assert(promise.state === Status.Rejected);
+        assert.isTrue(failed.calledOnce);
+        assert(failed.calledWith(233));
+        done();
+      }, 0);
+    });
+
+    promise.then(() => {}, failed);
   });
 });
