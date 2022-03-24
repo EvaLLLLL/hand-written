@@ -5,3 +5,5 @@
 - eventhub
 - promise
 - react hooks
+- debounced
+- throttle
