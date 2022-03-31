@@ -1,6 +1,7 @@
 import "mocha";
 import chai from "chai";
-import { Promise2 as Promise, Status } from "./promise";
+// import { Promise2 as Promise, Status } from "./promise";
+import {MyPromise as Promise, Status} from './practice';
 import sinon from "sinon";
 import sinonChai from "sinon-chai";
 chai.use(sinonChai);
