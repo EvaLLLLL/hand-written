@@ -1,6 +1,6 @@
 // 挂载 or 更新
 let isMount = true
-// 当前处理的 hook
+// 当前处理的 hook，这个变量就是为了知道当前是哪个 hook
 let workInProgressHook = null
 
 const fiber = {
@@ -11,6 +11,7 @@ const fiber = {
 }
 
 function useState(initialState) {
+  // ------------------ 创建 hook 链表，存在 workInProgressHook，永远指向最后一个 hook Start -----------------
   let hook
 
   if (isMount) {
@@ -40,10 +41,9 @@ function useState(initialState) {
     // workInProgressHook 指向下一个
     workInProgressHook = workInProgressHook.next
   }
+  // ------------------ 创建 hook 链表，存在 workInProgressHook，永远指向最后一个 hook End -----------------
 
-  // 接下来计算新的状态
-  // 遍历环状链表
-
+  // ------------------ 接下来计算新的状态，遍历环状链表 Start ---------------------------------------------
   let baseState = hook.memorizedHookState
   // 本次更新有新的 update 需要被执行
   if (hook.queue.pending) {
@@ -56,10 +56,12 @@ function useState(initialState) {
       firstUpdate = firstUpdate.next
     } while (firstUpdate !== hook.queue.pending.next)
 
+    // 这个 hook 遍历完了要置为空
     hook.queue.pending = null
   }
 
   hook.memorizedHookState = baseState
+  // ------------------ 接下来计算新的状态，遍历环状链表 End ---------------------------------------------
 
   return [baseState, dispatchAction.bind(null, hook.queue)]
 }
@@ -94,7 +96,7 @@ function dispatchAction(queue, action) {
   schedule()
 }
 
-// 每次更新触发
+// 每次更新触发，重渲染
 function schedule() {
   // 指向当前第一个 hook
   workInProgressHook = fiber.memorizedState
