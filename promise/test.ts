@@ -1,7 +1,7 @@
 import "mocha";
 import chai from "chai";
 // import { Promise2 as Promise, Status } from "./promise";
-import {MyPromise as Promise, Status} from './practice';
+import {MyPromise as Promise, Status} from './practice2';
 import sinon from "sinon";
 import sinonChai from "sinon-chai";
 chai.use(sinonChai);
@@ -86,7 +86,7 @@ describe("Promise", () => {
       resolve(233);
       resolve(23333);
       setTimeout(() => {
-        assert(promise.state === Status.Fullfilled);
+        assert(promise.status === Status.Fullfilled);
         assert.isTrue(succeed.calledOnce);
         assert(succeed.calledWith(233));
         done();
@@ -103,7 +103,7 @@ describe("Promise", () => {
       reject(233);
       reject(23333);
       setTimeout(() => {
-        assert(promise.state === Status.Rejected);
+        assert(promise.status === Status.Rejected);
         assert.isTrue(failed.calledOnce);
         assert(failed.calledWith(233));
         done();

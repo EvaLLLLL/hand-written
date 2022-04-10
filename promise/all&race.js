@@ -25,7 +25,7 @@ const myAll = (iterator) => {
 const myRace = (iterator) => {
 	return new Promise((resolve, reject) => {
 		for(let i in iterator) {
-			Promise.resolve(i)
+			Promise.resolve(iterator[i])
 				.then(data => resolve(data))
 				.catch(e => reject(e))
 		}
