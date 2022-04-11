@@ -6,7 +6,7 @@ const throttle = (fn, time) => {
     if (flag) return
 
     flag = true
-    fn.call(this, ...args)
+    fn.call(...args)
 
     setTimeout(() => {
       flag = false
