@@ -4,11 +4,25 @@ const throttle = (fn, time) => {
 
   return (...args) => {
     if (flag) return
-    fn.call(undefined, ...args)
+    fn(...args)
     flag = true
 
     setTimeout(() => {
       flag = false
     }, time)
+  }
+}
+
+
+const throttle = (fn, time) => {
+  let flag = false
+  
+  return (...args) => {
+    if (flag) return
+    
+    fn(...args)
+    flag = true
+    
+    setTimeout(() => flag = false, time)
   }
 }

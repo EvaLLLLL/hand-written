@@ -8,7 +8,7 @@ const debounced = (fn, time) => {
     }
 
     timer = setTimeout(() => {
-      fn.call(undefined, ...args)
+      fn(...args)
       timer = null
     }, time)
   }
