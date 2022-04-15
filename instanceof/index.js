@@ -1,14 +1,14 @@
-function myInstanceOf(left, right) {
+function myInstanceOf(target, asConstructor) {
   while (true) {
-    if (left === null) {
+    if (target === null) {
       return false
     }
 
-    if (left.__proto__ === right.prototype) {
+    if (target.__proto__ === asConstructor.prototype) {
       return true
     }
 
-    left = left.__proto__
+    target = target.__proto__
   }
 }
 
