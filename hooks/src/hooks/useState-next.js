@@ -68,7 +68,7 @@ function useState(initialState) {
 
 // 用来更新 state
 function dispatchAction(queue, action) {
-  // 代表一次更新，是一个环状链表（双向链表）
+  // 代表一次更新，是一个双向环状链表
   // 因为不仅要计算新的 state，而且每次更新是有优先级的，有些需要执行，有些不需要
   const update = {
     action,
