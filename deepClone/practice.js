@@ -8,13 +8,13 @@ function deepClone(obj, map = new Map()) {
   let target
 
   if (obj instanceof Array) {
-    target = new Array()
+    target = []
   } else if (obj instanceof Function) {
     target = new Function()
   } else if (obj instanceof Date) {
     target = new Date()
   } else {
-    target = new Object()
+    target = {}
   }
 
   map.set(target, 1)
@@ -28,9 +28,9 @@ function deepClone(obj, map = new Map()) {
   return target
 }
 
-var obj1 = {
+const obj1 = {
   a: 1,
-  b: { a: 2 },
+  b: {a: 2},
 }
-var obj2 = deepClone(obj1)
+const obj2 = deepClone(obj1)
 console.log(obj1, obj2, obj1 === obj2, obj1.a === obj2.a, obj1.b === obj2.b)
