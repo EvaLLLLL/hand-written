@@ -1,5 +1,5 @@
 Function.prototype.myBind = (asThis, ...args) => {
-  const asThis = asThis || window
+  asThis = asThis || window
   const fn = this
 
   function resultFn(...args2) {
