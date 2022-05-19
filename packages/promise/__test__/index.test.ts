@@ -1,6 +1,5 @@
 // import { Promise2 as MyPromise, Status } from "./promise";
 import { MyPromise, Status } from '../practice2'
-jest.spyOn(global, 'setTimeout')
 
 jest.useFakeTimers()
 
