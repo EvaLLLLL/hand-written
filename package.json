@@ -1,12 +1,20 @@
 {
   "name": "hand-written",
+  "type": "module",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:EvaLLLLL/hand-written.git",
   "license": "MIT",
   "scripts": {
-    "t:bind": "cd bind && node test.js",
-    "t:deep": "cd deepClone && yarn test",
-    "t:promise": "cd promise && yarn test"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.2"
+  },
+  "dependencies": {
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
   }
 }
