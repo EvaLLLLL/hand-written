@@ -8,6 +8,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.18.0",
     "@types/jest": "^27.5.1",
     "jest": "^28.1.0",
     "prettier": "^2.6.2",
