@@ -1,14 +1,14 @@
 // 防抖
-const debounced = (fn, time) => {
+const debounced = function (fn, time) {
   let timer = null
 
-  return (...args) => {
+  return function (...args) {
     if (timer !== null) {
       clearTimeout()
     }
 
     timer = setTimeout(() => {
-      fn(...args)
+      fn.call(this, ...args)
       timer = null
     }, time)
   }

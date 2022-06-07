@@ -1,53 +1,53 @@
 class DeepCloner {
   constructor() {
-    this.cache = [];
+    this.cache = []
   }
 
   clone(source) {
     if (source instanceof Object) {
-      let cachedDist = this.findCache(source);
+      let cachedDist = this.findCache(source)
       if (cachedDist) {
-        return cachedDist;
+        return cachedDist
       } else {
-        let dist;
+        let dist
         if (source instanceof Array) {
-          dist = new Array();
+          dist = []
         } else if (source instanceof Function) {
           dist = function () {
-            return source.apply(this, arguments);
-          };
+            return source.apply(this, arguments)
+          }
         } else if (source instanceof RegExp) {
-          dist = new RegExp(source.source, source.flags);
+          dist = new RegExp(source.source, source.flags)
         } else if (source instanceof Date) {
-          dist = new Date(source);
+          dist = new Date(source)
         } else {
-          dist = new Object();
+          dist = {}
         }
 
-        this.cache.push([source, dist]);
+        this.cache.push([source, dist])
 
         for (let key in source) {
           if (source.hasOwnProperty(key)) {
-            dist[key] = this.clone(source[key]);
+            dist[key] = this.clone(source[key])
           }
         }
 
-        return dist;
+        return dist
       }
     }
 
-    return source;
+    return source
   }
 
   findCache(source) {
     for (let i = 0; i < this.cache.length; i++) {
       if (this.cache[i][0] === source) {
-        return this.cache[i][1];
+        return this.cache[i][1]
       }
     }
 
-    return undefined;
+    return undefined
   }
 }
 
-module.exports = DeepCloner;
+module.exports = DeepCloner
