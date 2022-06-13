@@ -1,9 +1,1 @@
-## 手写系列
-
-- bind
-- deepClone
-- eventhub
-- promise
-- react hooks
-- debounced
-- throttle
+一些 `javascript` & `typescript` 手写函数，采用 `jest` 书写测试用例
