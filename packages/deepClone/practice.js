@@ -21,7 +21,7 @@ function deepClone(obj, map = new Map()) {
 
   for (let key in obj) {
     if (obj.hasOwnProperty(key)) {
-      target[key] = deepClone(obj[key])
+      target[key] = deepClone(obj[key], map)
     }
   }
 
@@ -30,7 +30,7 @@ function deepClone(obj, map = new Map()) {
 
 const obj1 = {
   a: 1,
-  b: {a: 2},
+  b: { a: 2 },
 }
 const obj2 = deepClone(obj1)
 console.log(obj1, obj2, obj1 === obj2, obj1.a === obj2.a, obj1.b === obj2.b)

@@ -7,7 +7,7 @@ const fiber = {
   // 保存组件本身
   stateNode: App,
   // 保存 hooks 的数据，链表保存
-  memorizedState: null,
+  memorizedHook: null,
 }
 
 function useState(initialState) {
@@ -25,10 +25,10 @@ function useState(initialState) {
       queue: { pending: null },
     }
 
-    if (!fiber.memorizedState) {
+    if (!fiber.memorizedHook) {
       // fiber 上没有 hook
       // 指向新创建的 hook
-      fiber.memorizedState = hook
+      fiber.memorizedHook = hook
       // workInProgressHook 指向当前处理的 hook
       workInProgressHook = hook
     } else {
@@ -99,7 +99,7 @@ function dispatchAction(queue, action) {
 // 每次更新触发，重渲染
 function schedule() {
   // 指向当前第一个 hook
-  workInProgressHook = fiber.memorizedState
+  workInProgressHook = fiber.memorizedHook
   // 重渲染
   const app = fiber.stateNode()
   // 挂载后修改标记
