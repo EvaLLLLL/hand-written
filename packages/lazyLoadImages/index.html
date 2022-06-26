@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lazyLoadImages</title>
+    <style>
+      img {
+        display: block;
+        height: 300px;
+        outline: 1px solid orchid;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <img src="loading.gif" data-src="pic.png" />
+    <script>
+      const imgs = document.querySelectorAll('img')
+
+      window.onscroll = function () {
+        const scrollTop =
+          document.body.scrollTop || document.documentElement.scrollTop
+        const winHeight = window.innerHeight
+        for (let i = 0; i < imgs.length; i++) {
+          if (imgs[i].offsetTop < scrollTop + winHeight) {
+            imgs[i].src = imgs[i].getAttribute('data-src')
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
